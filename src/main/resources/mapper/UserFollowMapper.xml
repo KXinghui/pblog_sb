@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.xinghui.pblog_sb.mapper.UserFollowMapper">
+	<resultMap type="userFollow" id="userFollowMap">
+		<id column="id" property="id" />
+		<!-- private Integer id; private Integer uid; private Integer gid; -->
+		<result column="uid" property="uid" />
+		<result column="gid" property="gid" />
+	</resultMap>
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="userFollow">
+		INSERT INTO userfollow
+		(uid,gid)
+		VALUES
+		(#{uid},#{gid})
+	</insert>
+
+	<update id="update" parameterType="userFollow">
+		UPDATE userfollow
+		SET
+		uid =
+		#{uid},gid = #{gid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM userfollow
+		WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<delete id="delete2" parameterType="userFollow">
+		DELETE FROM userfollow
+		WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="userFollowMap">
+		SELECT * FROM userfollow WHERE
+		id
+		=
+		#{id}
+	</select>
+
+	<select id="list" resultMap="userFollowMap">
+		SELECT * FROM userfollow
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM
+		userfollow
+	</select>
+
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="userFollow">
+		INSERT INTO userFollow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="gid != null">
+				gid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				#{uid},
+			</if>
+			<if test="gid != null">
+				#{gid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="userFollow">
+		UPDATE userFollow
+		<set>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+			<if test="uid != null">
+				gid = #{gid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO userfollow(uid,gid) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.uid},#{item.gid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM personal_blog.userfollow WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+	<insert id="dynamicBatchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		<foreach collection="list" item="item" separator=";">
+			INSERT INTO userFollow
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.uid != null">
+					uid,
+				</if>
+				<if test="item.gid != null">
+					gid,
+				</if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+				<if test="item.uid != null">
+					#{item.uid},
+				</if>
+				<if test="item.gid != null">
+					#{item.gid},
+				</if>
+			</trim>
+		</foreach>
+	</insert>
+
+	<update id="dynamicBatchUpdate" parameterType="list">
+		<foreach collection="list" item="item" separator=";">
+			UPDATE personal_blog.userfollow
+			<set>
+				<if test="item.uid != null">
+					uid = #{item.uid},
+				</if>
+				<if test="item.gid != null">
+					gid = #{item.gid},
+				</if>
+			</set>
+			WHERE id=#{item.id}
+		</foreach>
+	</update>
+
+
+
+	<select id="getByUserAndGroup" resultMap="userFollowMap">
+		SELECT * FROM
+		userfollow WHERE uid = #{uid} AND gid = #{gid}
+	</select>
+
+	<select id="listByGroup" parameterType="integer"
+		resultMap="userFollowMap">
+		SELECT * FROM userfollow WHERE gid = #{gid}
+	</select>
+
+	<select id="countByGroup" resultType="integer">
+		SELECT COUNT(*) FROM
+		userfollow WHERE gid = #{gid}
+	</select>
+
+	<select id="countByGroups" parameterType="list" resultType="map">
+		SELECT gid, COUNT(*) AS userFollowNum FROM userfollow GROUP BY gid
+		HAVING gid IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="listFollowUserByUser" parameterType="integer"
+		resultType="user">
+		SELECT DISTINCT
+		u.*
+		FROM
+		personal_blog.user u
+		INNER JOIN
+		personal_blog.userfollow uf ON u.id = uf.uid
+		INNER JOIN
+		personal_blog.group g ON g.id = uf.gid
+		WHERE
+		g.uid = #{uid}
+	</select>
+
+	<select id="countFollowUserNumByUser" parameterType="integer"
+		resultType="integer">
+		SELECT
+		COUNT(DISTINCT uf.uid) AS followUserNum
+		FROM
+		personal_blog.userfollow uf
+		INNER JOIN
+		personal_blog.group g ON g.id =
+		uf.gid
+		INNER JOIN
+		personal_blog.user u ON u.id = g.uid
+		WHERE
+		u.id =
+		#{uid}
+	</select>
+
+	<select id="countFansNumByUser" parameterType="integer"
+		resultType="integer">
+		SELECT COUNT(*) AS fansNum FROM (SELECT
+		COUNT(uf.uid)
+		FROM
+		personal_blog.userfollow uf
+		INNER JOIN
+		personal_blog.group g ON g.id =
+		uf.gid
+		WHERE
+		uf.uid = #{uid}
+		GROUP BY g.uid) fansNumGroupByUser
+	</select>
+
+	<select id="listFansIdByUser" parameterType="integer"
+		resultType="integer">
+		SELECT DISTINCT u.id
+		FROM
+		personal_blog.userfollow uf
+		INNER
+		JOIN
+		personal_blog.group g ON g.id = uf.gid
+		INNER JOIN
+		personal_blog.user u
+		ON g.uid = u.id
+		WHERE
+		uf.uid = #{uid}
+	</select>
+
+	<select id="listFansByUser" parameterType="integer"
+		resultType="user">
+		SELECT DISTINCT u.*
+		FROM
+		personal_blog.userfollow uf
+		INNER
+		JOIN
+		personal_blog.group g ON g.id = uf.gid
+		INNER JOIN
+		personal_blog.user u
+		ON g.uid = u.id
+		WHERE
+		uf.uid = #{uid}
+	</select>
+
+	<select id="listByFollowerAndUser" resultMap="userFollowMap">
+		SELECT
+		uf.*
+		FROM
+		personal_blog.userfollow uf
+		INNER JOIN
+		personal_blog.group g ON g.id =
+		uf.gid
+		WHERE
+		g.uid = #{followerid} AND uf.uid = #{uid}
+	</select>
+
+	<select id="countFollowUserByUserGroupByGroup"
+		parameterType="integer" resultType="map">
+		SELECT
+		g.id,COUNT(uf.uid)
+		FROM
+		personal_blog.userfollow uf
+		INNER JOIN
+		personal_blog.group g ON g.id =
+		uf.gid
+		INNER JOIN
+		personal_blog.user u ON g.uid = u.id
+		WHERE
+		u.id = #{uid}
+		GROUP BY g.id
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

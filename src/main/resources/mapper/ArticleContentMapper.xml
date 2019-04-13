@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="site.xinghui.pblog_sb.mapper.ArticleContentMapper">
+	<resultMap type="articleContent" id="articleContentMap">
+		<id column="id" property="id" />
+		<result column="mdContent" property="mdContent" />
+		<result column="htmlContent" property="htmlContent" />
+		<result column="aid" property="aid" />
+	</resultMap>
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="articleContent">
+		INSERT INTO articlecontent
+		(mdContent,htmlContent,aid)
+		VALUES
+		(#{mdContent},#{htmlContent},#{aid})
+	</insert>
+
+	<update id="update" parameterType="articleContent">
+		UPDATE articlecontent
+		SET
+		mdContent = #{mdContent},htmlContent = #{htmlContent},aid = #{aid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<update id="updateByArticle" parameterType="articleContent">
+		UPDATE articlecontent
+		SET
+		mdContent = #{mdContent},htmlContent = #{htmlContent} WHERE aid =
+		#{aid}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM articlecontent
+		WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<delete id="deleteByArticle" parameterType="integer">
+		DELETE FROM
+		articlecontent
+		WHERE
+		aid
+		=
+		#{aid}
+	</delete>
+
+	<delete id="delete2" parameterType="articleContent">
+		DELETE FROM articlecontent
+		WHERE id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="articleContentMap">
+		SELECT * FROM articlecontent WHERE id
+		=
+		#{id}
+	</select>
+
+	<select id="list" resultMap="articleContentMap">
+		SELECT * FROM articlecontent
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM
+		articlecontent
+	</select>
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="articleContent">
+		INSERT INTO articlecontent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mdContent != null">
+				mdContent,
+			</if>
+			<if test="htmlContent != null">
+				htmlContent,
+			</if>
+			<if test="aid != null">
+				aid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="mdContent != null">
+				#{mdContent},
+			</if>
+			<if test="htmlContent != null">
+				#{htmlContent},
+			</if>
+			<if test="aid != null">
+				#{aid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="articleContent">
+		UPDATE articlecontent
+		<set>
+			<if test="mdContent != null">
+				mdContent = #{mdContent},
+			</if>
+			<if test="htmlContent != null">
+				htmlContent = #{htmlContent},
+			</if>
+			<if test="aid != null">
+				aid = #{aid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<update id="dynamicUpdateByArticle"
+		parameterType="articleContent">
+		UPDATE articlecontent
+		<set>
+			<if test="mdContent != null">
+				mdContent = #{mdContent},
+			</if>
+			<if test="htmlContent != null">
+				htmlContent = #{htmlContent},
+			</if>
+		</set>
+		WHERE aid=#{aid}
+	</update>
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO articlecontent(mdContent,htmlContent,aid) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.mdContent},#{item.htmlContent},#{item.aid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM articlecontent WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+	<delete id="batchDeleteByArtice" parameterType="list">
+		DELETE FROM articlecontent WHERE aid IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="getByArticle" parameterType="integer"
+		resultMap="articleContentMap">
+		SELECT * FROM articlecontent WHERE aid = #{aid}
+	</select>
+
+	<select id="listByArticles" parameterType="list"
+		resultMap="articleContentMap">
+		SELECT * FROM articlecontent WHERE aid IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="listMulCondition" parameterType="hashmap"
+		resultMap="articleContentMap">
+		SELECT * FROM articlecontent
+		<where>
+			<if test="mdContent != null">
+				mdContent LIKE CONCAT('%',#{mdContent},'%')
+			</if>
+			<if test="htmlContent != null">
+				AND htmlContent LIKE CONCAT('%',#{htmlContent},'%')
+			</if>
+			<if test="aid != null">
+				AND aid = #{aid}
+			</if>
+		</where>
+	</select>
+</mapper>
+
+
+
+
+
+
+

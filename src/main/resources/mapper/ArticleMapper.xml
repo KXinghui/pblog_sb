@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.xinghui.pblog_sb.mapper.ArticleMapper">
+	<resultMap type="article" id="articleMap">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="subTitle" property="subTitle" />
+		<result column="clickNum" property="clickNum" />
+		<result column="viewNum" property="viewNum" />
+		<result column="articleStatu" property="articleStatu" />
+		<result column="updateDate" property="updateDate" />
+		<result column="createDate" property="createDate" />
+		<result column="uid" property="uid" />
+		<result column="cid" property="cid" />
+	</resultMap>
+	<!-- title,subTitle,clickNum,viewNum,articleStatu,createDate,uid,cid -->
+	<!-- #{title}#{subTitle}#{clickNum}#{viewNum}#{articleStatu}#{createDate}#{uid}#{cid} -->
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="article">
+		INSERT INTO
+		personal_blog.article
+		(title,subTitle,clickNum,viewNum,articleStatu,createDate,updateDate,uid,cid)
+		VALUES
+		(#{title},#{subTitle},#{clickNum},#{viewNum},#{articleStatu},#{createDate},#{updateDate},#{uid},#{cid})
+	</insert>
+
+	<update id="update" parameterType="article">
+		UPDATE personal_blog.article
+		SET title =
+		#{title},subTitle = #{subTitle},clickNum =
+		#{clickNum},viewNum =
+		#{viewNum},articleStatu =
+		#{articleStatu},createDate =
+		#{createDate},updateDate =
+		#{updateDate},uid = #{uid},cid = #{cid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM
+		personal_blog.article WHERE id
+		=
+		#{id}
+	</delete>
+
+	<delete id="delete2" parameterType="article">
+		DELETE FROM
+		personal_blog.article WHERE id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="articleMap">
+		SELECT * FROM personal_blog.article
+		WHERE id =
+		#{id}
+	</select>
+
+	<select id="list" resultMap="articleMap">
+		SELECT * FROM personal_blog.article
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM
+		personal_blog.article
+	</select>
+
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="article">
+		INSERT INTO personal_blog.article
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null">
+				title,
+			</if>
+			<if test="subTitle != null">
+				subTitle,
+			</if>
+			<if test="clickNum != null">
+				clickNum,
+			</if>
+			<if test="viewNum != null">
+				viewNum,
+			</if>
+			<if test="articleStatu != null">
+				articleStatu,
+			</if>
+			<if test="updateDate != null">
+				updateDate,
+			</if>
+			<if test="createDate != null">
+				createDate,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="cid != null">
+				cid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="subTitle != null">
+				#{subTitle},
+			</if>
+			<if test="clickNum != null">
+				#{clickNum},
+			</if>
+			<if test="viewNum != null">
+				#{viewNum},
+			</if>
+			<if test="articleStatu != null">
+				#{articleStatu},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate},
+			</if>
+			<if test="uid != null">
+				#{uid},
+			</if>
+			<if test="cid != null">
+				#{cid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="article">
+		UPDATE article
+		<set>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="subTitle != null">
+				subTitle = #{subTitle},
+			</if>
+			<if test="clickNum != null">
+				clickNum = #{clickNum},
+			</if>
+			<if test="viewNum != null">
+				viewNum = #{viewNum},
+			</if>
+			<if test="articleStatu != null">
+				articleStatu = #{articleStatu},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate},
+			</if>
+			<if test="updateDate != null">
+				updateDate = #{updateDate},
+			</if>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+			<if test="cid != null">
+				cid = #{cid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO personal_blog.article
+		(title,subTitle,clickNum,viewNum,articleStatu,createDate,updateDate,uid,cid)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.title},#{item.subTitle},#{item.clickNum},#{item.viewNum},#{item.articleStatu},#{item.createDate},#{item.updateDate},#{item.uid},#{item.cid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM personal_blog.article WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+
+
+	<select id="getArticleStatu" parameterType="integer"
+		resultType="articleStatu">
+		SELECT articleStatu FROM article WHERE
+		id =
+		#{id}
+	</select>
+
+	<select id="getByTitle" resultMap="articleMap">
+		SELECT * FROM
+		personal_blog.article WHERE
+		title =
+		#{title}
+	</select>
+
+	<select id="listFuzzyByTitle" parameterType="string"
+		resultMap="articleMap">
+		<bind name="title" value="'%'+ title +'%'" />
+		SELECT * FROM personal_blog.article WHERE title
+		LIKE #{title}
+	</select>
+
+	<select id="getBySubTitle" resultMap="articleMap">
+		SELECT * FROM
+		personal_blog.article WHERE
+		subTitle =
+		#{subTitle}
+	</select>
+
+	<select id="listFuzzyBySubTitle" parameterType="string"
+		resultMap="articleMap">
+		<bind name="subTitle" value="'%'+ subTitle +'%'" />
+		SELECT * FROM personal_blog.article WHERE subTitle
+		LIKE #{subTitle}
+	</select>
+
+	<select id="listMulCondition" parameterType="hashmap"
+		resultMap="articleMap">
+		SELECT * FROM personal_blog.article
+		<where>
+			<if test="title != null">
+				title LIKE CONCAT('%',#{title},'%')
+			</if>
+			<if test="subTitle != null">
+				AND subTitle LIKE CONCAT('%',#{subTitle},'%')
+			</if>
+			<if test="articleStatu != null">
+				AND articleStatu = #{articleStatu}
+			</if>
+			<if test="uid != null">
+				AND uid = #{uid}
+			</if>
+			<if test="cid != null">
+				AND cid = #{cid}
+			</if>
+		</where>
+	</select>
+
+	<select id="listByCategory" parameterType="integer"
+		resultMap="articleMap">
+		SELECT * FROM personal_blog.article WHERE cid = #{cid}
+	</select>
+
+	<select id="listByCategoryAndArticleStatu"
+		resultMap="articleMap">
+		SELECT * FROM personal_blog.article
+		<where>
+			<if test="cid != null">
+				cid = #{cid}
+			</if>
+			<if test="articleStatu != null">
+				AND articleStatu = #{articleStatu}
+			</if>
+		</where>
+	</select>
+
+	<select id="listByUser" parameterType="integer"
+		resultMap="articleMap">
+		SELECT * FROM personal_blog.article WHERE uid = #{uid}
+	</select>
+
+	<select id="listArtileIdByUser" parameterType="integer"
+		resultType="integer">
+		SELECT id FROM personal_blog.article WHERE uid = #{uid}
+	</select>
+
+	<select id="listByUserAndArticleStatu" resultMap="articleMap">
+		SELECT * FROM
+		article WHERE uid = #{uid} AND articleStatu = #{articleStatu}
+	</select>
+
+	<select id="countByCategory" resultType="integer">
+		SELECT COUNT(*) FROM
+		personal_blog.article WHERE cid = #{cid}
+	</select>
+
+	<select id="countByCategoryAndArticleStatu" resultType="integer">
+		SELECT COUNT(*) FROM
+		personal_blog.article
+		<where>
+			<if test="cid != cid">
+				cid = #{subTitle}
+			</if>
+			<if test="articleStatu != null">
+				AND articleStatu = #{articleStatu}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="countByUserAndArticleStatu" resultType="integer">
+		SELECT
+		COUNT(*) FROM personal_blog.article WHERE uid = #{uid} AND
+		articleStatu =
+		#{articleStatu}
+	</select>
+
+	<select id="countNumberOfClickViewByUserAndArticleStatu"
+		resultType="map">
+		SELECT
+		SUM(clickNum) AS clickNum,SUM(viewNum) AS viewNum
+		FROM article WHERE uid =
+		#{uid} AND
+		articleStatu = #{articleStatu}
+	</select>
+
+
+	<select id="listMulConditionByArticle" parameterType="article"
+		resultMap="articleMap">
+		SELECT * FROM personal_blog.article
+		<where>
+			<if test="title != null">
+				title LIKE CONCAT('%',#{title},'%')
+			</if>
+			<if test="subTitle != null">
+				AND subTitle LIKE CONCAT('%',#{subTitle},'%')
+			</if>
+			<if test="cid != null">
+				AND cid = #{cid}
+			</if>
+			<if test="articleStatu != null">
+				AND articleStatu = #{articleStatu}
+			</if>
+			<if test="uid != null">
+				AND uid = #{uid}
+			</if>
+		</where>
+	</select>
+	<select id="countMulConditionByArticle" parameterType="article"
+		resultType="integer">
+		SELECT COUNT(*) FROM personal_blog.article
+		<where>
+			<if test="title != null">
+				title LIKE CONCAT('%',#{title},'%')
+			</if>
+			<if test="subTitle != null">
+				AND subTitle LIKE CONCAT('%',#{subTitle},'%')
+			</if>
+			<if test="cid != null">
+				AND cid = #{cid}
+			</if>
+			<if test="articleStatu != null">
+				AND articleStatu = #{articleStatu}
+			</if>
+			<if test="uid != null">
+				AND uid = #{uid}
+			</if>
+		</where>
+	</select>
+</mapper>
+
+
+
+
+
+
+

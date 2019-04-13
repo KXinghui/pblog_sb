@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.xinghui.pblog_sb.mapper.GroupMapper">
+	<resultMap type="group" id="groupMap">
+		<id column="id" property="id" />
+		<!-- private Integer id; private String name; private Visibility visibility; 
+			private GroupType groupType; private Integer uid; -->
+		<result column="name" property="name" />
+		<result column="visibility" property="visibility" />
+		<result column="groupType" property="groupType" />
+		<result column="uid" property="uid" />
+	</resultMap>
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="group">
+		INSERT INTO personal_blog.group
+		(name,visibility,groupType,uid) VALUES
+		(#{name},#{visibility},#{groupType},#{uid})
+	</insert>
+
+	<update id="update" parameterType="group">
+		UPDATE personal_blog.group SET
+		name =
+		#{name},visibility = #{visibility},groupType = #{groupType},uid
+		=
+		#{uid} WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM
+		personal_blog.group
+		WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<delete id="delete2" parameterType="group">
+		DELETE FROM
+		personal_blog.group
+		WHERE id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="groupMap">
+		SELECT * FROM personal_blog.group
+		WHERE
+		id
+		=
+		#{id}
+	</select>
+
+	<select id="list" resultMap="groupMap">
+		SELECT * FROM personal_blog.group
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM
+		personal_blog.group
+	</select>
+
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="group">
+		INSERT INTO personal_blog.group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="visibility != null">
+				visibility,
+			</if>
+			<if test="groupType != null">
+				groupType,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="visibility != null">
+				#{visibility},
+			</if>
+			<if test="groupType != null">
+				#{groupType},
+			</if>
+			<if test="uid != null">
+				#{uid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="group">
+		UPDATE personal_blog.group
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="visibility != null">
+				visibility = #{visibility},
+			</if>
+			<if test="groupType != null">
+				groupType = #{groupType},
+			</if>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO personal_blog.group(name,visibility,groupType,uid) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.aid},#{item.gid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM personal_blog.group WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+
+
+	<select id="getByUserNameAndGroupType" resultMap="groupMap">
+		SELECT * FROM
+		personal_blog.group WHERE uid=#{uid} AND name = #{name} AND groupType
+		= #{groupType}
+	</select>
+
+	<select id="listByUser" resultMap="groupMap">
+		SELECT * FROM
+		personal_blog.group WHERE uid = #{uid}
+	</select>
+
+	<select id="listByUserAndGroupType" resultMap="groupMap">
+		SELECT * FROM
+		personal_blog.group WHERE uid = #{uid} AND groupType = #{groupType}
+	</select>
+
+	<select id="listByUserGroupTypeAndVisibility"
+		resultMap="groupMap">
+		SELECT * FROM personal_blog.group WHERE uid = #{uid} AND
+		groupType = #{groupType} AND visibility = #{visibility}
+	</select>
+
+	<select id="listGroupIdByUser" parameterType="integer"
+		resultType="integer">
+		SELECT id FROM personal_blog.group WHERE uid = #{uid}
+	</select>
+
+	<select id="listGroupId" parameterType="group"
+		resultType="integer">
+		SELECT id FROM personal_blog.group
+		<where>
+			<if test="name != null">
+				name = #{name}
+			</if>
+			<if test="visibility != null">
+				AND visibility = #{visibility}
+			</if>
+			<if test="groupType != null">
+				AND groupType = #{groupType}
+			</if>
+			<if test="uid != null">
+				AND uid = #{uid}
+			</if>
+		</where>
+	</select>
+</mapper>
+
+
+
+
+
+
+

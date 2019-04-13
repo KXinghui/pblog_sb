@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="site.xinghui.pblog_sb.mapper.UserSettingMapper">
+	<resultMap type="userSetting" id="userSettingMapper">
+		<id column="id" property="id" />
+		<id column="uid" property="uid" />
+		<result column="isRecordLoginSuccessHistory"
+			property="isRecordLoginSuccessHistory" />
+		<result column="isRecordLoginFailHistory"
+			property="isRecordLoginFailHistory" />
+		<result column="isRecordShowArticleHistory"
+			property="isRecordShowArticleHistory" />
+	</resultMap>
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="userSetting">
+		INSERT INTO usersetting
+		(uid,isRecordLoginSuccessHistory,isRecordLoginFailHistory,isRecordShowArticleHistory)
+		VALUES
+		(#{uid},#{isRecordLoginSuccessHistory}#{isRecordLoginFailHistory}#{isRecordShowArticleHistory})
+	</insert>
+
+	<update id="update" parameterType="userSetting">
+		UPDATE userSetting
+		SET
+		isRecordLoginSuccessHistory =
+		#{isRecordLoginSuccessHistory},isRecordLoginFailHistory =
+		#{isRecordLoginFailHistory},isRecordShowArticleHistory =
+		#{isRecordShowArticleHistory},uid = #{uid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM usersetting WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<delete id="delete2" parameterType="userSetting">
+		DELETE FROM usersetting WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="userSettingMapper">
+		SELECT * FROM usersetting WHERE id =
+		#{id}
+	</select>
+
+	<select id="list" resultMap="userSettingMapper">
+		SELECT * FROM usersetting
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM usersetting
+	</select>
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="userSetting">
+		INSERT INTO usersetting
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="isRecordLoginSuccessHistory != null">
+				isRecordLoginSuccessHistory,
+			</if>
+			<if test="isRecordLoginFailHistory != null">
+				isRecordLoginFailHistory,
+			</if>
+			<if test="isRecordShowArticleHistory != null">
+				isRecordShowArticleHistory,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				#{uid},
+			</if>
+			<if test="isRecordLoginSuccessHistory != null">
+				#{isRecordLoginSuccessHistory},
+			</if>
+			<if test="isRecordLoginFailHistory != null">
+				#{isRecordLoginFailHistory},
+			</if>
+			<if test="isRecordShowArticleHistory != null">
+				#{isRecordShowArticleHistory},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="userSetting">
+		UPDATE usersetting
+		<set>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+			<if test="isRecordLoginSuccessHistory != null">
+				isRecordLoginSuccessHistory =
+				#{isRecordLoginSuccessHistory},
+			</if>
+			<if test="isRecordLoginFailHistory != null">
+				isRecordLoginFailHistory = #{isRecordLoginFailHistory},
+			</if>
+			<if test="isRecordShowArticleHistory != null">
+				isRecordShowArticleHistory =
+				#{isRecordShowArticleHistory},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO usersetting
+		(uid,isRecordLoginSuccessHistory,isRecordLoginFailHistory,isRecordShowArticleHistory)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.uid},#{item.isRecordLoginSuccessHistory}#{item.isRecordLoginFailHistory}#{item.isRecordShowArticleHistory})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM usersetting WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+
+	<select id="getByUser" resultMap="userSettingMapper">
+		SELECT * FROM usersetting
+		WHERE
+		uid =
+		#{uid}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

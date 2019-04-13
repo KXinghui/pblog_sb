@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="site.xinghui.pblog_sb.mapper.LoginHistoryMapper">
+	<!-- private Integer id; private String ip; private Integer isLogin; private 
+		Integer uid; -->
+	<resultMap type="loginHistory" id="loginHistoryMap">
+		<id column="id" property="id" />
+		<result column="ip" property="ip" />
+		<result column="isLogin" property="isLogin" />
+		<result column="loginTime" property="loginTime" />
+		<result column="uid" property="uid" />
+	</resultMap>
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="loginHistory">
+		INSERT INTO loginhistory
+		(ip,isLogin,uid)
+		VALUES
+		(#{ip},#{isLogin},#{uid})
+	</insert>
+
+	<update id="update" parameterType="loginHistory">
+		UPDATE loginhistory
+		SET ip =
+		#{ip},
+		isLogin = #{isLogin},
+		uid = #{uid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM loginhistory WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="loginHistoryMap">
+		SELECT * FROM loginhistory WHERE id
+		=
+		#{id}
+	</select>
+
+	<select id="list" resultMap="loginHistoryMap">
+		SELECT * FROM loginhistory
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM loginhistory
+	</select>
+
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="loginHistory">
+		INSERT INTO loginhistory
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="isLogin != null">
+				isLogin,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="ip != null">
+				#{ip},
+			</if>
+			<if test="isLogin != null">
+				#{isLogin},
+			</if>
+			<if test="uid != null">
+				#{uid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="loginHistory">
+		UPDATE loginhistory
+		<set>
+			<if test="ip != null">
+				ip = #{ip},
+			</if>
+			<if test="isLogin != null">
+				isLogin = #{isLogin},
+			</if>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO loginhistory (name) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.ip},#{item.isLogin},#{item.uid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM loginhistory WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+
+
+	<select id="listByUser" resultMap="loginHistoryMap">
+		SELECT * FROM loginhistory
+		WHERE
+		uid
+		=
+		#{uid}
+	</select>
+
+	<select id="listIdByUser" resultType="integer">
+		SELECT id FROM loginhistory
+		WHERE
+		uid
+		=
+		#{uid}
+	</select>
+
+	<select id="listByUserAndIsLogin" resultMap="loginHistoryMap">
+		SELECT * FROM
+		loginhistory
+		WHERE
+		uid
+		=
+		#{uid} AND isLogin = #{isLogin}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

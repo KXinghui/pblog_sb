@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="site.xinghui.pblog_sb.mapper.ArticleFavorityMapper">
+	<resultMap type="articleFavority" id="articleFavorityMap">
+		<id column="id" property="id" />
+		<!-- private Integer id; private Integer aid; private Integer gid; -->
+		<result column="aid" property="aid" />
+		<result column="gid" property="gid" />
+		<result column="createTime" property="createTime" />
+	</resultMap>
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="articleFavority">
+		INSERT INTO articlefavority
+		(aid,gid)
+		VALUES
+		(#{aid},#{gid})
+	</insert>
+
+	<update id="update" parameterType="articleFavority">
+		UPDATE articlefavority
+		SET
+		aid =
+		#{aid},gid = #{gid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM articlefavority
+		WHERE
+		id
+		=
+		#{id}
+	</delete>
+
+	<delete id="delete2" parameterType="articleFavority">
+		DELETE FROM articlefavority
+		WHERE id
+		=
+		#{id}
+	</delete>
+
+	<!-- 获取 -->
+	<select id="get" resultMap="articleFavorityMap">
+		SELECT * FROM articlefavority WHERE
+		id
+		=
+		#{id}
+	</select>
+
+	<select id="list" resultMap="articleFavorityMap">
+		SELECT * FROM articlefavority
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM
+		articlefavority
+	</select>
+
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="articleFavority">
+		INSERT INTO articleFavority
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="aid != null">
+				aid,
+			</if>
+			<if test="gid != null">
+				gid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="aid != null">
+				#{aid},
+			</if>
+			<if test="gid != null">
+				#{gid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="articleFavority">
+		UPDATE articleFavority
+		<set>
+			<if test="aid != null">
+				aid = #{aid},
+			</if>
+			<if test="aid != null">
+				gid = #{gid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO articlefavority(aid,gid) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.aid},#{item.gid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM articlefavority WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+	<insert id="dynamicBatchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		<foreach collection="list" item="item" separator=";">
+			INSERT INTO articlefavority
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.aid != null">
+					aid,
+				</if>
+				<if test="item.gid != null">
+					gid,
+				</if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+				<if test="item.aid != null">
+					#{item.aid},
+				</if>
+				<if test="item.gid != null">
+					#{item.gid},
+				</if>
+			</trim>
+		</foreach>
+	</insert>
+
+	<update id="dynamicBatchUpdate" parameterType="list">
+		<foreach collection="list" item="item" separator=";">
+			UPDATE articlefavority
+			<set>
+				<if test="item.aid != null">
+					aid = #{item.aid},
+				</if>
+				<if test="item.gid != null">
+					gid = #{item.gid},
+				</if>
+			</set>
+			WHERE id=#{item.id}
+		</foreach>
+	</update>
+
+
+	<select id="getByArticleAndGroup" resultMap="articleFavorityMap">
+		SELECT * FROM
+		articlefavority WHERE aid = #{aid} AND gid = #{gid}
+	</select>
+
+	<select id="listByGroup" parameterType="integer"
+		resultMap="articleFavorityMap">
+		SELECT * FROM articlefavority WHERE gid = #{gid}
+	</select>
+
+	<select id="countByGroup" parameterType="integer"
+		resultType="integer">
+		SELECT COUNT(*) FROM articlefavority WHERE gid = #{gid}
+	</select>
+
+	<select id="listByUserAndArticle" resultMap="articleFavorityMap">
+		SELECT
+		af.*
+		FROM
+		personal_blog.articlefavority af
+		INNER JOIN
+		personal_blog.group g ON
+		g.id =
+		af.gid
+		WHERE
+		g.uid = #{uid} AND
+		af.aid =
+		#{aid}
+	</select>
+
+	<select id="countByArticle" parameterType="integer"
+		resultType="integer">
+		SELECT COUNT(*) AS articleFavorityNum FROM (SELECT
+		COUNT(af.aid)
+		FROM
+		personal_blog.articlefavority af
+		INNER JOIN
+		personal_blog.group g ON g.id = af.gid
+		WHERE
+		af.aid = #{aid}
+		GROUP BY
+		g.uid) articleFavorityNumGroupByUser
+	</select>
+
+	<select id="listIdByUserAndVisibility" resultType="integer">
+		SELECT DISTINCT
+		a.id
+		FROM
+		personal_blog.article a
+		INNER JOIN
+		personal_blog.articlefavority af ON a.id = af.aid
+		INNER JOIN
+		personal_blog.group g ON g.id = af.gid
+		<where>
+			<if test="uid != null">
+				g.uid = #{uid}
+			</if>
+			<if test="visibility != null">
+				And g.visibility = #{visibility}
+			</if>
+		</where>
+	</select>
+
+	<select id="countByUserAndVisibility" resultType="integer">
+		SELECT COUNT(af.*)
+		FROM
+		personal_blog.articlefavority af
+		INNER JOIN
+		personal_blog.group g ON g.id = af.gid
+		<where>
+			<if test="uid != null">
+				g.uid = #{uid}
+			</if>
+			<if test="visibility != null">
+				And g.visibility = #{visibility}
+			</if>
+		</where>
+	</select>
+
+	<select id="listByUserAndVisibility"
+		resultMap="articleFavorityMap">
+		SELECT DISTINCT
+		af.*
+		FROM
+		personal_blog.articlefavority af
+		INNER JOIN
+		personal_blog.group g ON g.id = af.gid
+		<where>
+			<if test="uid != null">
+				g.uid = #{uid}
+			</if>
+			<if test="visibility != null">
+				And g.visibility = #{visibility}
+			</if>
+		</where>
+	</select>
+
+
+
+</mapper>
+
+
+
+
+
+
+

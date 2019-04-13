@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文章页面</title>
+  <link rel="stylesheet" href="../../styles/normalize/normalize.css">
+  <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../styles/admincss.css">
+</head>
+
+<body>
+
+
+  <div class="article-list container-fluid">
+    <div class="row">
+      <div class="article-list-container col-xs-12 col-sm-12 col-md-12">
+        <table id="article-list-table" class="base-table table table-hover table-responsive">
+          <tr>
+            <th class="hidden" field="id">文章ID</th>
+            <th field="title">文章标题</th>
+            <th field="subTitle">文章副标题</th>
+            <th text="category">分类</th>
+            <th text="clickNum">点击量</th>
+            <th text="viewNum">浏览量</th>
+            <th text="articleStatu">文章状态</th>
+            <th text="createTime">创建时间</th>
+            <th text="updateTime">更新时间</th>
+            <th>无关</th>
+            <th>操作</th>
+          </tr>
+          <tr>
+            <td class="hidden">1</td>
+            <td>Java 基本数据类型</td>
+            <td>内置数据类型
+              Java语言提供了八种基本类型。六种数字类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型。 </td>
+            <td>后fdfdfd端</td>
+            <td>12</td>
+            <td>12</td>
+            <td>已发布</td>
+            <td>2018-12-12</td>
+            <td>2018-12-12</td>
+            <td>无关</td>
+            <td class="op">
+              <div class="btn-group btn-group-xs">
+                <button class="view-article-link btn btn-primary"><span class="glyphicon glyphicon-list-alt"></span></button>
+                <button class="edit-article-link btn btn-warning"><span class="glyphicon glyphicon-edit"></span></button>
+                <button class="del-article-link btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <a class="btn btn-primary" data-toggle="modal" href='#admin-view-article-modal'>查看文章</a>
+  <div class="modal fade" id="admin-view-article-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <!-- admin-查看-文章-表单-模态窗口 -->
+          <form id="admin-view-article-form-modal" action="" role="admin-view-article-form-modal">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="">
+                  <div class="icon-info" title="创建时间">
+                    <span class="text">创建时间</span>
+                    <span class="info" text="createTime"></span>
+                  </div>
+                  <div class="icon-info" title="更新时间">
+                    <span class="text">更新时间</span>
+                    <span class="info" text="updateTime"></span>
+                  </div>
+
+                  <div class="icon-info" title="副标题">
+                    <span class="text">副标题</span>
+                    <span class="info">我的对方的fdfdf </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="">label</label>
+              <input type="text" class="form-control" id="" placeholder="Input field">
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <a class="btn btn-primary" data-toggle="modal" href='#admin-edit-article-modal'>编辑文章</a>
+  <div class="modal fade" id="admin-edit-article-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <!-- admin-编辑-文章-表单-模态窗口 -->
+          <form id="admin-edit-article-form-modal" action="" method="POST" role="form">
+            <div class="icon-font-container">
+              <div class="icon-info" title="分类">
+                <span class="text">分类</span>
+                <span class="info"><span text="category"></span></span>
+              </div>
+              <div class="icon-info" title="点击量">
+                <span class="text">点击量</span>
+                <span class="info"><span text="clickNum"></span></span>
+              </div>
+              <div class="icon-info" title="浏览量">
+                <span class="text">浏览量</span>
+                <span class="info"><span text="viewNum"></span></span>
+              </div>
+              <div class="icon-info" title="文章状态">
+                <span class="text">文章状态</span>
+                <span class="info"><span text="articleStatu"></span></span>
+              </div>
+              <div class="icon-info" title="创建时间">
+                <span class="text">创建时间</span>
+                <span class="info"><span text="createTime"></span></span>
+              </div>
+              <div class="icon-info" title="更新时间">
+                <span class="text">更新时间</span>
+                <span class="info"><span text="updateTime"></span></span>
+              </div>
+            </div>
+            <!-- 表单-操作-错误信息 -->
+            <div class="form-op-errmsg">
+              <span class="errmsg">fdfdfdfdfdf</span>
+              <span class="close-msg-btn close-opmsg-btn glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="form-group">
+              <label for="id">文章ID</label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="请输入文章ID">
+            </div>
+            <div class="form-group">
+              <label for="title">文章标题</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题">
+            </div>
+            <div class="form-group">
+              <label for="subTitle">文章副标题</label>
+              <textarea type="text" class="form-control" id="subTitle" name="subTitle" placeholder="请输入文章副标题" minlength="5"
+                maxlength="60" style="width:100%;"></textarea>
+            </div>
+            <div style="text-align:right;">
+              <button type="reset" class="reset-btn btn btn-warning">重置</button>
+              <button type="button" class="fill-btn btn btn-primary">填充原有信息</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="submit" class="submit-btn btn btn-primary">提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="edit-article-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">编辑文章</h4>
+        </div>
+        <div class="modal-body">
+          <div class="well" style="text-align:center;">
+            <button id="edit-article-btn" class="btn btn-primary">编辑文章</button>
+            <a id="edit-articlecontent-btn" href="foreeditArticle?article=${article.id}" class="btn btn-primary">直接编辑文章内容</a>
+          </div>
+          <!-- 编辑-文章-表单-模态窗口 -->
+          <form id="edit-article-form-modal" action="" method="POST" role="form">
+            <!-- 表单-操作-错误信息 -->
+            <div class="form-op-errmsg">
+              <span class="errmsg">fdfdfdfdfdf</span>
+              <span class="close-msg-btn close-opmsg-btn glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="form-group">
+              <label for="title">文章标题</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题">
+            </div>
+            <div class="form-group">
+              <label for="subTitle">文章副标题</label>
+              <input type="text" class="form-control" id="subTitle" name="subTitle" placeholder="请输入文章副标题">
+            </div>
+            <div class="form-group">
+              <label for="cid">文章分类</label>
+              <select name="cid" id="cid" class="form-control">
+                <option value="">-- Select One --</option>
+                <option value="1">HTML/CSS</option>
+                <option value="2">JavaScript</option>
+                <option value="3">服务端</option>
+                <option value="4">数据库</option>
+                <option value="5">移动端</option>
+                <option value="6">XML教程</option>
+              </select>
+            </div>
+            <div style="text-align:right;">
+              <button type="reset" class="reset-btn btn btn-warning">重置</button>
+              <button type="button" class="fill-btn btn btn-primary">填充原有信息</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="submit" class="submit-btn btn btn-primary">提交</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="well"></div>
+
+
+  <script src="../../scripts/jquery-3.3.1.js"></script>
+  <script src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="../../scripts/adminjs.js"></script>
+  <script>
+    $(function () {
+      $("[data-toggle='popover']").popover();
+    });
+    $(function () {
+      $("[data-toggle='tooltip']").tooltip();
+    });
+  </script>
+</body>
+
+</html>

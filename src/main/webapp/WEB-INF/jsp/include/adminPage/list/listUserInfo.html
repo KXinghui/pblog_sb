@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户信息页面</title>
+  <link rel="stylesheet" href="../../styles/normalize/normalize.css">
+  <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../styles/admincss.css">
+</head>
+
+<body>
+
+  <div class="userinfo-list ">
+    <div class="userinfo-list-container">
+      <table id="userinfo-list-table" class="base-table table table-hover table-responsive">
+        <tr>
+          <th class="hidden" field="id">用户信息ID</th>
+          <th field="realName">真实姓名</th>
+          <th field="gender">性别</th>
+          <th field="mobile">手机号码</th>
+          <th field="email">邮箱</th>
+          <th field="birthday">生日</th>
+          <th field="address">地址</th>
+          <th>无关</th>
+          <th field="dictum">名言</th>
+          <th>操作</th>
+        </tr>
+        <tr>
+          <td class="hidden">1</td>
+          <td>邝星辉</td>
+          <td>男</td>
+          <td>13416668123</td>
+          <td>949869433@QQ.com</td>
+          <td>1996-11-19</td>
+          <td>广东省东莞市</td>
+          <td>无关</td>
+          <td>世上无难事，只怕有心人</td>
+          <td class="op">
+            <span class="edit-userinfo-link glyphicon glyphicon-edit"></span>
+            <span class="del-userinfo-link glyphicon glyphicon-trash"></span>
+          </td>
+        </tr>
+        <tr>
+          <td class="hidden">2</td>
+          <td>万利</td>
+          <td>男</td>
+          <td>13416668123</td>
+          <td>949869433@QQ.com</td>
+          <td>1996-01-12</td>
+          <td>广东省东莞市</td>
+          <td>无关</td>
+          <td>天道酬勤</td>
+          <td class="op">
+            <span class="edit-userinfo-link glyphicon glyphicon-edit"></span>
+            <span class="del-userinfo-link glyphicon glyphicon-trash"></span>
+          </td>
+        </tr>
+        <tr>
+          <td class="hidden">3</td>
+          <td>米高</td>
+          <td>女</td>
+          <td>13416668123</td>
+          <td>949869433@QQ.com</td>
+          <td>1996-01-12</td>
+          <td>广东省东莞市</td>
+          <td>无关</td>
+          <td>天道酬勤</td>
+          <td class="op">
+            <span class="edit-userinfo-link glyphicon glyphicon-edit"></span>
+            <span class="del-userinfo-link glyphicon glyphicon-trash"></span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+
+  <a class="btn btn-primary" data-toggle="modal" href='#admin-edit-userinfo-modal'>Trigger modal</a>
+  <div class="modal fade" id="admin-edit-userinfo-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">编辑用户信息</h4>
+        </div>
+        <div class="modal-body">
+          <form id="admin-edit-userinfo-form-modal" action="" method="POST" role="form">
+            <!-- 表单-操作-错误信息 -->
+            <div class="form-op-errmsg">
+              <span class="errmsg">fdfdfdfdfdf</span>
+              <span class="close-msg-btn close-opmsg-btn glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="form-group">
+              <label for="realName">真实姓名</label>
+              <input type="text" class="form-control" id="realName" name="realName" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="gender">性别</label>
+              <div class="input-raido">
+                <label for="male">&nbsp;&nbsp;<input type="radio" id="male" name="gender" value="1">&nbsp;&nbsp;<span>男</span>&nbsp;&nbsp;</label>
+                <label for="female">&nbsp;&nbsp;<input type="radio" id="female" name="gender" value="0">&nbsp;&nbsp;<span>女</span>&nbsp;&nbsp;</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mobile">手机号码</label>
+              <input type="text" class="form-control" id="mobile" name="mobile" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="email">邮箱</label>
+              <input type="text" class="form-control" id="email" name="email" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="birthday">生日</label>
+              <input type="date" class="form-control" id="birthday" name="birthday" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="">地址</label>
+              <div class="address-select form-group">
+                <select name="address-province" id="province" class="form-control">
+                  <option value="">选择省</option>
+                </select>
+                <select name="address-city" id="city" class="form-control">
+                  <option value="">选择城市</option>
+                </select>
+                <select name="address-area" id="area" class="form-control">
+                  <option value="">选择区</option>
+                </select>
+              </div>
+              <div class="address">
+                <span class="address-show hidden"></span>
+                <input type="text" class="form-control" name="address" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dictum">名言</label>
+              <input type="text" class="form-control" id="dictum" name="dictum" placeholder="">
+            </div>
+            <div style="text-align:right;">
+              <button type="reset" class="reset-btn btn btn-warning">重置</button>
+              <button type="button" class="fill-btn btn btn-primary">填充原有信息</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button type="submit" class="submit-btn btn btn-primary">提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="../../scripts/jquery-3.3.1.js"></script>
+  <script src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="../../scripts/adminjs.js"></script>
+  <script>
+    $(function () {
+      $("[data-toggle='popover']").popover();
+    });
+    $(function () {
+      $("[data-toggle='tooltip']").tooltip();
+    });
+  </script>
+</body>
+
+</html>

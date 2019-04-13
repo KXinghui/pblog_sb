@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.xinghui.pblog_sb.mapper.UserInfoMapper">
+	<resultMap type="userInfo" id="userInfoMap">
+		<id column="id" property="id" />
+		<result column="realName" property="realName" />
+		<result column="gender" property="gender" />
+		<result column="mobile" property="mobile" />
+		<result column="email" property="email" />
+		<result column="birthday" property="birthday" />
+		<result column="address" property="address" />
+		<result column="dictum" property="dictum" />
+		<result column="browserIcon" property="browserIcon" />
+		<result column="headImg" property="headImg" />
+		<result column="backgroundImg" property="backgroundImg" />
+		<result column="wnMaxCard" property="wnMaxCard" />
+		<result column="uid" property="uid" />
+	</resultMap>
+
+	<insert id="insert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="userInfo">
+		INSERT INTO userInfo
+		(realName,gender,mobile,email,birthday,address,dictum,browserIcon,headImg,backgroundImg,wnMaxCard,uid)
+		VALUES
+		(#{realName},#{gender},#{mobile},#{email},#{birthday},#{address},#{dictum},#{browserIcon},#{headImg},#{backgroundImg},#{wnMaxCard},#{uid})
+	</insert>
+
+	<update id="update" parameterType="userInfo">
+		UPDATE userInfo
+		SET
+		realName =
+		#{realName},gender =
+		#{gender},mobile = #{mobile},email =
+		#{email},birthday =
+		#{birthday},address =
+		#{address},dictum =
+		#{dictum},browserIcon =
+		#{browserIcon},headImg =
+		#{headImg},backgroundImg =
+		#{backgroundImg},wnMaxCard =
+		#{wnMaxCard},uid = #{uid}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="integer">
+		DELETE FROM userinfo WHERE id
+		=
+		#{id}
+	</delete>
+
+	<select id="get" resultMap="userInfoMap">
+		SELECT * FROM userinfo WHERE id =
+		#{id}
+	</select>
+
+	<select id="list" resultMap="userInfoMap">
+		SELECT * FROM userinfo
+	</select>
+
+	<select id="count" resultType="integer">
+		SELECT COUNT(*) FROM userinfo
+	</select>
+
+
+	<insert id="dynamicInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="userInfo">
+		INSERT INTO userInfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="realName != null">
+				realName,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="dictum != null">
+				dictum,
+			</if>
+			<if test="browserIcon != null">
+				browserIcon,
+			</if>
+			<if test="headImg != null">
+				headImg,
+			</if>
+			<if test="backgroundImg != null">
+				backgroundImg,
+			</if>
+			<if test="wnMaxCard != null">
+				wnMaxCard,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+			<if test="realName != null">
+				#{realName},
+			</if>
+			<if test="gender != null">
+				#{gender},
+			</if>
+			<if test="mobile != null">
+				#{mobile},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="birthday != null">
+				#{birthday},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="dictum != null">
+				#{dictum},
+			</if>
+			<if test="browserIcon != null">
+				#{browserIcon},
+			</if>
+			<if test="headImg != null">
+				#{headImg},
+			</if>
+			<if test="backgroundImg != null">
+				#{backgroundImg},
+			</if>
+			<if test="wnMaxCard != null">
+				#{wnMaxCard},
+			</if>
+			<if test="uid != null">
+				#{uid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="dynamicUpdate" parameterType="userInfo">
+		UPDATE userInfo
+		<set>
+			<if test="realName != null">
+				realName = #{realName},
+			</if>
+			<if test="gender != null">
+				gender = #{gender},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile},
+			</if>
+			<if test="email != null">
+				email = #{email},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday},
+			</if>
+			<if test="address != null">
+				address = #{address},
+			</if>
+			<if test="dictum != null">
+				dictum = #{dictum},
+			</if>
+			<if test="browserIcon != null">
+				browserIcon =
+				#{browserIcon},
+			</if>
+			<if test="headImg != null">
+				headImg = #{headImg},
+			</if>
+			<if test="backgroundImg != null">
+				backgroundImg =
+				#{backgroundImg},
+			</if>
+			<if test="wnMaxCard != null">
+				wnMaxCard = #{wnMaxCard},
+			</if>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+
+	<insert id="batchInsert" keyColumn="id" keyProperty="id"
+		useGeneratedKeys="true" parameterType="list">
+		INSERT INTO userInfo (name,password) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.realName},#{item.gender},#{item.mobile},#{item.email},#{item.birthday},#{item.address},#{item.dictum},#{item.browserIcon},#{item.headImg},#{item.backgroundImg},#{item.wnMaxCard},#{item.uid})
+		</foreach>
+	</insert>
+
+	<delete id="batchDelete" parameterType="list">
+		DELETE FROM userinfo WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
+
+
+	<select id="getByUser" resultMap="userInfoMap">
+		SELECT * FROM userinfo WHERE
+		uid = #{uid}
+	</select>
+
+	<select id="listFuzzyByName" parameterType="string"
+		resultMap="userInfoMap">
+		<bind name="name" value="'%'+ name +'%'" />
+		SELECT * FROM userinfo WHERE name
+		LIKE #{name}
+	</select>
+
+	<select id="listMulCondition" parameterType="hashmap"
+		resultMap="userInfoMap">
+		SELECT * FROM userinfo
+		<where>
+			<if test="realName != null">
+				realName LIKE CONCAT('%',#{realName},'%')
+			</if>
+			<if test="mobile != null">
+				AND mobile LIKE CONCAT('%',#{mobile},'%')
+			</if>
+			<if test="email != null">
+				AND email = #{email}
+			</if>
+			<if test="address != null">
+				AND address = #{address}
+			</if>
+		</where>
+	</select>
+</mapper>
+
+
+
+
+
+
+

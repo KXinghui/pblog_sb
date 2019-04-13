@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>用户页面</title>
+<link rel="stylesheet" href="../../styles/normalize/normalize.css">
+<link rel="stylesheet"
+	href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../styles/admincss.css">
+</head>
+
+<body>
+
+
+	<div class="user-list">
+		<div class="user-list-container">
+			<table id="user-list-table"
+				class="base-table table table-hover table-responsive">
+				<tr>
+					<th class="hidden" field="id">用户ID</th>
+					<th field="name">用户名</th>
+					<th>无关</th>
+					<th field="password">密码</th>
+					<th>无关</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td class="hidden"></td>
+					<td></td>
+					<td>无关</td>
+					<td></td>
+					<td>无关</td>
+					<td class="op">
+						<div class="btn-group btn-group-xs">
+							<button class="view-userinfo-link btn btn-primary">
+								<span class="glyphicon glyphicon-user"></span>
+							</button>
+							<button class="view-userinfo-img-link btn btn-primary">
+								<span class="glyphicon glyphicon-picture"></span>
+							</button>
+							<button class="edit-user-link btn btn-warning">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+							<button class="del-user-link btn btn-danger">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="hidden">2</td>
+					<td>万利wl</td>
+					<td>无关</td>
+					<td>kxh123</td>
+					<td>无关</td>
+					<td class="op">
+						<div class="btn-group btn-group-xs">
+							<button class="view-userinfo-link btn btn-primary">
+								<span class="glyphicon glyphicon-user"></span>
+							</button>
+							<button class="view-userinfo-img-link btn btn-primary">
+								<span class="glyphicon glyphicon-picture"></span>
+							</button>
+							<button class="edit-user-link btn btn-warning">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+							<button class="del-user-link btn btn-danger">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="hidden">3</td>
+					<td>米高mg</td>
+					<td>无关</td>
+					<td>kxh520</td>
+					<td>无关</td>
+					<td class="op">
+						<div class="btn-group btn-group-xs">
+							<button class="view-userinfo-link btn btn-primary">
+								<span class="glyphicon glyphicon-user"></span>
+							</button>
+							<button class="view-userinfo-img-link btn btn-primary">
+								<span class="glyphicon glyphicon-picture"></span>
+							</button>
+							<button class="edit-user-link btn btn-warning">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+							<button class="del-user-link btn btn-danger">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+
+
+	<a class="btn btn-primary" data-toggle="modal"
+		href='#admin-view-userinfo-modal'>查看用户信息</a>
+	<div class="modal fade" id="admin-view-userinfo-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<!-- admin-查看-用户信息-表单-模态窗口 -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<a class="btn btn-primary" data-toggle="modal"
+		href='#admin-edit-user-modal'>编辑用户</a>
+	<div class="modal fade" id="admin-edit-user-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<!-- admin-编辑-用户-表单-模态窗口 -->
+					<form id="admin-edit-user-form-modal" action="" method="POST"
+						role="form">
+						<!-- 表单-操作-错误信息 -->
+						<div class="form-op-errmsg">
+							<span class="errmsg">fdfdfdfdfdf</span> <span
+								class="close-msg-btn close-opmsg-btn glyphicon glyphicon-remove"></span>
+						</div>
+						<div class="form-group">
+							<label for="edit-name">用户名</label> <input type="text"
+								class="form-control" id="edit-name" name="name"
+								placeholder="请输入用户名">
+						</div>
+						<div class="form-group">
+							<label for="edit-password">密码</label> <input type="text"
+								class="form-control" id="edit-password" name="password"
+								placeholder="请输入密码">
+						</div>
+						<div style="text-align: right;">
+							<button type="reset" class="reset-btn btn btn-warning">重置</button>
+							<button type="button" class="fill-btn btn btn-primary">填充原有信息</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">关闭</button>
+							<button type="submit" class="submit-btn btn btn-primary">提交</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<a class="btn btn-primary" data-toggle="modal"
+		href='#admin-delete-user-modal'>删除用户</a>
+	<div class="modal fade" id="admin-delete-user-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">温馨提示：删除用户</h4>
+				</div>
+				<div class="modal-body">确认删除该用户？</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">还是算了</button>
+					<button type="button" class="confirm-btn btn btn-danger">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="paging center-block">
+		<div class="row">
+			<div class="col-xs-12 col-sm-9 col-md-8">
+				<!-- 分页信息 -->
+				<div class="page-info">
+					<span class="text-info text-muted"> 共有<span
+						class="total text-danger lead">80</span>条记录，<span
+						class="total-page text-danger lead">10</span>页，每页显示<span
+						class="page-record text-danger lead">8</span>条记录，当前为<span
+						class="current text-danger lead">10</span>页
+					</span> </span>
+				</div>
+				<ul class="pagination">
+					<li><a href="#">&laquo;</a></li>
+					<li><a href="#">上一页</a></li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">7</a></li>
+					<li><a href="#">8</a></li>
+					<li><a href="#">9</a></li>
+					<li><a href="#">10</a></li>
+					<li><a href="#">下一页</a></li>
+					<li><a href="#">&raquo;</a></li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-md-2 col-md-offset-1">
+				<!-- 改变分页 -->
+				<div class="change-page">
+					<div class="input-group">
+						<input type="number" name="pageRecord" class="form-control"
+							data-toggle="tooltip" title="输入后点击按钮可更改每页显示记录数(不能超过总记录数)">
+						<span class="input-group-btn">
+							<button id="change-pagerecord-btn" class="btn btn-default"
+								type="button" title="点击按钮可更改每页显示记录数">
+								<span class="glyphicon glyphicon-list-alt"></span>
+							</button>
+						</span>
+					</div>
+					<div class="input-group">
+						<input type="number" name="current" class="form-control"
+							data-toggle="tooltip" title="输入后点击按钮可跳转到指定页"> <span
+							class="input-group-btn"><button id="change-current-btn"
+								class="btn btn-default" type="button" title="点击按钮可跳转到指定页">
+								<span class="glyphicon glyphicon-arrow-right"></span>
+							</button> </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<div class="well"></div>
+
+
+	<script src="../../scripts/jquery-3.3.1.js"></script>
+	<script src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="../bootstrapvalidator/dist/js/bootstrapValidator.js"></script>
+	<script src="../../scripts/adminjs.js"></script>
+	<script>
+		$(function() {
+			$("[data-toggle='popover']").popover();
+		});
+		$(function() {
+			$("[data-toggle='tooltip']").tooltip();
+		});
+	</script>
+</body>
+
+</html>
